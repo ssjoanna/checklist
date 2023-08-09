@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário e Resultado</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e6e6fa; /* Cor de fundo */
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative; /* Para a posição absoluta da imagem */
+  }
+  h2 {
+    font-size: 24px;
+    text-transform: uppercase; /* Texto em maiúsculo */
+    text-align: center; /* Centralizado */
+    margin-top: 0;
+    color: #ba55d3; /* Cor do título */
+  }
+  .tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  .tab {
+    flex: 1;
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    transition: background-color 0.3s, color 0.3s; /* Efeito de transição */
+  }
+  .tab.active {
+    background-color: #ba55d3; /* Cor da aba ativa */
+    color: white; /* Texto branco */
+  }
+  form {
+    margin-top: 20px;
+  }
+  label {
+    font-weight: bold;
+  }
+  input[type="text"],
+  input[type="checkbox"] {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  input[type="submit"] {
+    background-color: #ba55d3; /* Cor do botão */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .result {
+    margin-top: 20px;
+  }
+  canvas {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+    background-color: #ba55d3; /* Cor do botão */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <img src="C:\Users\Marcio Kleber\Downloads\img\sac_logo-1024x809.png" alt="Logo" style="position: absolute; top: 10px; left: 10px; width: 82px;">
+  <h2>Formulário de Verificação</h2>
+  <div class="tabs">
+    <div class="tab active" id="tabMudancaEndereco">MUDANÇA DE ENDEREÇO</div>
+    <div class="tab" id="tabTrocaTitularidade">TROCA DE TITULARIDADE</div>
+  </div>
+
+  <div id="mudancaEnderecoContainer" style="display: block;">
+    <form id="formMudancaEndereco">
+      <label for="nomeClienteMudancaEndereco">Nome do Cliente:</label>
+      <input type="text" id="nomeClienteMudancaEndereco" name="nomeClienteMudancaEndereco" required><br>
+      <label for="codigoClienteMudancaEndereco">Código do Cliente:</label>
+      <input type="text" id="codigoClienteMudancaEndereco" name="codigoClienteMudancaEndereco" required><br>
+      
+      <p>Caixa de seleção sim e não com a opção marcar para cada ponto abaixo:</p>
+      <label><input type="checkbox" name="ponto1MudancaEndereco"> Contrato tem fidelidade?</label><br>
+      <label><input type="checkbox" name="ponto2MudancaEndereco"> Primeira Mudança de Endereço?</label><br>
+      <label><input type="checkbox" name="ponto3MudancaEndereco"> Gerou a Ordem de serviço Liberação de Cto?</label><br>
+      <label><input type="checkbox" name="ponto4MudancaEndereco"> Foi atualizado o Cadastro do MK?</label><br>
+      <label><input type="checkbox" name="ponto5MudancaEndereco"> Foi atualizado o Cadastro no Geosite?</label><br>
+      <label><input type="checkbox" name="ponto6MudancaEndereco"> Foi Criado um novo contrato no Lexio se Fidelizado?</label><br>
+      <label><input type="checkbox" name="ponto7MudancaEndereco"> Foi alterado o Termo de Adesão - Novo? (Sem Fidelidade)</label><br>
+      
+      <input type="submit" value="Gerar Resultado">
+    </form>
+  </div>
+  
+  <div id="trocaTitularidadeContainer" style="display: none;">
+    <form id="formTrocaTitularidade">
+       <label for="nomeClienteTrocaTitularidade">Nome do Cliente:</label>
+      <input type="text" id="nomeClienteTrocaTitularidade" name="nomeClienteTrocaTitularidade" required><br>
+      <label for="codigoClienteTrocaTitularidade">Código do Cliente:</label>
+      <input type="text" id="codigoClienteTrocaTitularidade" name="codigoClienteTrocaTitularidade" required><br>
+      
+      <p>Caixa de seleção sim e não com a opção marcar para cada ponto abaixo:</p>
+      <label><input type="checkbox" name="ponto1TrocaTitularidade"> Contrato do antigo titular tem fidelidade?</label><br>
+      <label><input type="checkbox" name="ponto2TrocaTitularidade"> Foi confirmado com o novo e antigo titular?</label><br>
+      <label><input type="checkbox" name="ponto3TrocaTitularidade"> Cliente NetPará?</label><br>
+      <label><input type="checkbox" name="ponto4TrocaTitularidade"> Precisou trocar o aparelho?</label><br>
+      <label><input type="checkbox" name="ponto5TrocaTitularidade"> Foi criado cadastro e contrato dentro do MK?</label><br>
+      <label><input type="checkbox" name="ponto6TrocaTitularidade"> Foi criado/alterado cadastro no geosite?</label><br>
+      <label><input type="checkbox" name="ponto7TrocaTitularidade"> Foi Criado um novo contrato no Lexio se Fidelizado?</label><br>
+      <label><input type="checkbox" name="ponto8TrocaTitularidade"> E-mail foi encaminhado?</label><br>
+      
+      <input type="submit" value="Gerar Resultado">
+    </form>
+  </div>
+  
+  <div class="result" id="resultMudancaEndereco" style="display: none;">
+ <h2>Resultado - MUDANÇA DE ENDEREÇO</h2>
+    <canvas id="canvasMudancaEndereco"></canvas>
+    <p>
+      <a id="downloadLinkMudancaEndereco" download><button>Baixar Resultado (PNG)</button></a>
+      <button id="copyButtonMudancaEndereco">Copiar Resultado</button>
+    </p>
+  </div>
+
+  <div class="result" id="resultTrocaTitularidade" style="display: none;">
+    <h2>Resultado - TROCA DE TITULARIDADE</h2>
+    <canvas id="canvasTrocaTitularidade"></canvas>
+    <p>
+      <a id="downloadLinkTrocaTitularidade" download><button>Baixar Resultado (PNG)</button></a>
+      <button id="copyButtonTrocaTitularidade">Copiar Resultado</button>
+    </p>
+  </div>
+</div>
+
+<script>
+const tabMudancaEndereco = document.getElementById("tabMudancaEndereco");
+const tabTrocaTitularidade = document.getElementById("tabTrocaTitularidade");
+const mudancaEnderecoContainer = document.getElementById("mudancaEnderecoContainer");
+const trocaTitularidadeContainer = document.getElementById("trocaTitularidadeContainer");
+const resultMudancaEnderecoContainer = document.getElementById("resultMudancaEndereco");
+const resultTrocaTitularidadeContainer = document.getElementById("resultTrocaTitularidade");
+
+tabMudancaEndereco.addEventListener("click", function() {
+  tabMudancaEndereco.classList.add("active");
+  tabTrocaTitularidade.classList.remove("active");
+  mudancaEnderecoContainer.style.display = "block";
+  trocaTitularidadeContainer.style.display = "none";
+  resultMudancaEnderecoContainer.style.display = "none";
+  resultTrocaTitularidadeContainer.style.display = "none";
+});
+
+tabTrocaTitularidade.addEventListener("click", function() {
+  tabTrocaTitularidade.classList.add("active");
+  tabMudancaEndereco.classList.remove("active");
+  mudancaEnderecoContainer.style.display = "none";
+  trocaTitularidadeContainer.style.display = "block";
+  resultMudancaEnderecoContainer.style.display = "none";
+  resultTrocaTitularidadeContainer.style.display = "none";
+});
+
+document.getElementById("formMudancaEndereco").addEventListener("submit", function(event) {
+  event.preventDefault();
+  generateResult("MUDANCA_ENDERECO");
+});
+
+document.getElementById("formTrocaTitularidade").addEventListener("submit", function(event) {
+  event.preventDefault();
+  generateResult("TROCA_TITULARIDADE");
+});
+
+document.getElementById("copyButtonMudancaEndereco").addEventListener("click", function() {
+  copyResult("MUDANCA_ENDERECO");
+});
+
+document.getElementById("copyButtonTrocaTitularidade").addEventListener("click", function() {
+  copyResult("TROCA_TITULARIDADE");
+});
+
+function generateResult(formType) {
+  let formId, nomeId, codigoId, pontosName, canvasId, downloadLinkId, resultContainer;
+
+  if (formType === "MUDANCA_ENDERECO") {
+    formId = "formMudancaEndereco";
+    nomeId = "nomeClienteMudancaEndereco";
+    codigoId = "codigoClienteMudancaEndereco";
+    pontosName = "ponto";
+    canvasId = "canvasMudancaEndereco";
+    downloadLinkId = "downloadLinkMudancaEndereco";
+    resultContainer = resultMudancaEnderecoContainer;
+  } else if (formType === "TROCA_TITULARIDADE") {
+    formId = "formTrocaTitularidade";
+    nomeId = "nomeClienteTrocaTitularidade";
+    codigoId = "codigoClienteTrocaTitularidade";
+    pontosName = "ponto";
+    canvasId = "canvasTrocaTitularidade";
+    downloadLinkId = "downloadLinkTrocaTitularidade";
+    resultContainer = resultTrocaTitularidadeContainer;
+  } else {
+    return;
+  }
+
+  const checkboxes = document.querySelectorAll(`#${formId} input[type="checkbox"]`);
+  const canvas = document.getElementById(canvasId);
+  const downloadLink = document.getElementById(downloadLinkId);
+  
+  const ctx = canvas.getContext("2d");
+  canvas.width = 600;
+  canvas.height = 200 + checkboxes.length * 25; // Ajuste de altura
+  
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.font = "bold 16px Arial";
+  ctx.fillStyle = "black";
+  
+  const nomeCliente = document.getElementById(nomeId).value;
+  const codigoCliente = document.getElementById(codigoId).value;
+  
+  let y = 30;
+  let titulo;
+
+  if (formType === "MUDANCA_ENDERECO") {
+    titulo = "Check List Mudança de Endereço";
+  } else if (formType === "TROCA_TITULARIDADE") {
+    titulo = "Check List Troca de Titularidade";
+  } else {
+    titulo = "Check List";
+  }
+
+  ctx.fillText(titulo, 20, y); // Título
+  ctx.font = "bold 15px Arial"; // Alteração do tamanho da fonte
+  y += 25;
+  ctx.fillText("Nome do Cliente: " + nomeCliente, 20, y);
+  y += 25;
+  ctx.fillText("Código do Cliente: " + codigoCliente, 20, y);
+  y += 25;
+  
+  checkboxes.forEach((checkbox, index) => {
+    const label = checkbox.parentNode.textContent.trim();
+    const checked = checkbox.checked ? "Sim" : "Não";
+    
+    ctx.fillText(`${index + 1}. ${label} - ${checked}`, 20, y);
+    y += 25;
+  });
+  
+  downloadLink.href = canvas.toDataURL("image/png");
+  
+  resultContainer.style.display = "block";
+  mudancaEnderecoContainer.style.display = "none";
+  trocaTitularidadeContainer.style.display = "none";
+}
+
+function copyResult(formType) {
+  const textResult = [];
+
+  if (formType === "MUDANCA_ENDERECO") {
+    textResult.push(`Check List Mudança de Endereço`);
+    textResult.push(`Nome do Cliente: ${document.getElementById("nomeClienteMudancaEndereco").value}`);
+    textResult.push(`Código do Cliente: ${document.getElementById("codigoClienteMudancaEndereco").value}`);
+  
+    const checkboxes = document.querySelectorAll(`#formMudancaEndereco input[type="checkbox"]`);
+    checkboxes.forEach((checkbox, index) => {
+      const label = checkbox.parentNode.textContent.trim();
+      const checked = checkbox.checked ? "Sim" : "Não";
+      textResult.push(`${index + 1}. ${label} - ${checked}`);
+    });
+  } else if (formType === "TROCA_TITULARIDADE") {
+    textResult.push(`Check List Troca de Titularidade`);
+    textResult.push(`Nome do Cliente: ${document.getElementById("nomeClienteTrocaTitularidade").value}`);
+    textResult.push(`Código do Cliente: ${document.getElementById("codigoClienteTrocaTitularidade").value}`);
+  
+    const checkboxes = document.querySelectorAll(`#formTrocaTitularidade input[type="checkbox"]`);
+    checkboxes.forEach((checkbox, index) => {
+      const label = checkbox.parentNode.textContent.trim();
+      const checked = checkbox.checked ? "Sim" : "Não";
+      textResult.push(`${index + 1}. ${label} - ${checked}`);
+    });
+  }
+
+  const resultText = textResult.join("\n");
+  const tempTextArea = document.createElement("textarea");
+  tempTextArea.value = resultText;
+  document.body.appendChild(tempTextArea);
+  tempTextArea.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempTextArea);
+
+  alert("Resultado copiado para a área de transferência.");
+}
+</script>
+</body>
+</html>
